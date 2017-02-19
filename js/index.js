@@ -26,6 +26,16 @@ $(document).ready(function() {
                 if(rsp.stat === "fail") {
                     console.log("flickr Error("+ rsp.code +"):", rsp.message);
                 }
+
+                var $resultsList = $('<ul>');
+                var photos = rsp.photos.photo;
+
+                $(photos).each(function() {
+                    $photo = $('<li>').html(this.title);
+                    $photo.appendTo($resultsList);
+                });
+
+                $('#results').html($resultsList);
             });
     });
 });
