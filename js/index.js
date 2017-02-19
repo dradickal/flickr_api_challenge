@@ -7,7 +7,7 @@ var photoSearch = function (searchText) {
     "&content_type=1" +
     "&safe_search=1" +
     "&format=json" +
-    "&jsoncallback=?" +
+    "&jsoncallback=?"+
     "&api_key=" + API_KEY;
 
 
@@ -22,8 +22,10 @@ $(document).ready(function() {
     $('#flickr_search').on('click', function() {
         var query = $('#flickr_query').val();
         photoSearch(query)
-            .then(function(data) {
-                console.log(data);
+            .then(function(rsp) {
+                if(rsp.stat === "fail") {
+                    console.log("flickr Error("+ rsp.code +"):", rsp.message);
+                }
             });
     });
 });
