@@ -1,0 +1,23 @@
+{
+  "name": "flickr_api_challenge",
+  "version": "1.0.0",
+  "description": "Code test for Realync",
+  "private": true,
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dradickal/flickr_api_challenge.git"
+  },
+  "author": "David Radick",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dradickal/flickr_api_challenge/issues"
+  },
+  "homepage": "https://github.com/dradickal/flickr_api_challenge#readme",
+  "devDependencies": {
+    "browser-sync": "^2.18.8"
+  }
+}
