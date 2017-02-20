@@ -16,7 +16,11 @@ var photoSearch = function (searchText) {
         type: "GET",
         dataType: 'jsonp'
     });
-}
+};
+
+var makeImageUrl = function(photo, size) {
+    return "https://farm"+ photo.farm +".staticflickr.com/"+ photo.server +"/"+ photo.id +"_"+ photo.secret +"_"+ size +".jpg";
+};
 
 $(document).ready(function() {
     $('#flickr_search').on('click', function() {
@@ -31,7 +35,11 @@ $(document).ready(function() {
                 var photos = rsp.photos.photo;
 
                 $(photos).each(function() {
-                    $photo = $('<li>').html(this.title);
+                    $photo = $('<li>');
+                    var $thumb = $('<img>').attr("src", makeImageUrl(this, 't'));
+                    $photo.append($thumb);
+                    var $caption = $("<p>").addClass('caption').text(this.title);
+                    $photo.append($caption);
                     $photo.appendTo($resultsList);
                 });
 
