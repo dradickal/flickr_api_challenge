@@ -58,7 +58,7 @@ $(document).ready(function() {
         photoSearch(query)
             .then(parseSearchResults);
     });
-
+    
     $('#flickr_query').on('keyup', function(e) {
         if (e.keyCode === 13) {
             var query = $(this).val();
