@@ -1,14 +1,21 @@
-var photoSearch = function (searchText) {
+function photoSearch(searchText) {
+    this.searchText = searchText;
+    this.paging = {};
+}
+
+
+photoSearch.prototype.search = function () {
     var API_KEY = "089063c49f6c8706a04b70f8a1f2abb2";
 
     var url = "https://api.flickr.com/services/rest/?" +
     "method=flickr.photos.search&" +
-    "&text=" + searchText +
+    "&text=" + this.searchText +
     "&content_type=1" +
     "&safe_search=1" +
     "&format=json" +
     "&extras=" + encodeURIComponent("url_t,url_o") +
     "&jsoncallback=?"+
+    "&page=" + (this.paging.page ? this.paging.page + 1 : 1) +
     "&api_key="+ API_KEY;
 
     return $.ajax({
@@ -18,12 +25,12 @@ var photoSearch = function (searchText) {
     });
 };
 
-var makeImageUrl = function(photo, size) {
+photoSearch.prototype.makeImageUrl = function(photo, size) {
     var src = "https://farm"+ photo.farm +".staticflickr.com/"+ photo.server +"/"+ photo.id +"_"+ photo.secret;
     return src + (size ? "_"+ size +".jpg" : ".jpg");
 };
 
-var parseSearchResults = function(rsp) {
+photoSearch.prototype.parseSearchResults = function(rsp) {
     var $results; 
     
     if(rsp.stat === "fail") {
@@ -58,6 +65,7 @@ var parseSearchResults = function(rsp) {
 };
 
 $(document).ready(function() {
+    
     $('#flickr_search').on('click', function() {
         var query = $('#flickr_query').val();
         photoSearch(query)
