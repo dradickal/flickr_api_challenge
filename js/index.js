@@ -7,6 +7,7 @@ var photoSearch = function (searchText) {
     "&content_type=1" +
     "&safe_search=1" +
     "&format=json" +
+    "&extras=" + encodeURIComponent("url_t,url_o") +
     "&jsoncallback=?"+
     "&api_key="+ API_KEY;
 
@@ -18,7 +19,8 @@ var photoSearch = function (searchText) {
 };
 
 var makeImageUrl = function(photo, size) {
-    return "https://farm"+ photo.farm +".staticflickr.com/"+ photo.server +"/"+ photo.id +"_"+ photo.secret +"_"+ size +".jpg";
+    var src = "https://farm"+ photo.farm +".staticflickr.com/"+ photo.server +"/"+ photo.id +"_"+ photo.secret;
+    return src + (size ? "_"+ size +".jpg" : ".jpg");
 };
 
 var parseSearchResults = function(rsp) {
@@ -36,12 +38,15 @@ var parseSearchResults = function(rsp) {
         $results = $('<div>');
 
         $(photos).each(function(index) {
+            var tSrc = this.url_t || makeImageUrl(this, "t");
+            var oSrc = this.url_o || makeImageUrl(this);
+            
             var $photo = $('<div>')
                 .addClass('thumbnail')
-                .attr('data-index', index);
+                .attr('data-full-size', oSrc);
             
             var $thumb = $('<img>')
-                .attr("src", makeImageUrl(this, 't'));
+                .attr("src", tSrc);
 
             $photo.append($thumb);
             $photo.appendTo($results);
@@ -66,5 +71,20 @@ $(document).ready(function() {
                 .then(parseSearchResults);
         }
     });
+    
+    $('#results').on('click', '.thumbnail', function() {
+        var oSrc = this.dataset['fullSize'];
+        var $img = $('<img>')
+            .attr('src', oSrc);
+            // .attr('width')
+            // .attr('height');
 
+        $('#fullSize').html($img);
+        $('#modal').addClass('show');
+         
+    });
+
+    $('#modal-close').on('click', function() {
+        $('#modal').removeClass('show');
+    });
 });
