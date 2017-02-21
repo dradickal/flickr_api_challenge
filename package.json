@@ -6,7 +6,7 @@
   "main": "index.html",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "serve": "browser-sync start --server --files './css/*.css, ./js/*.js'",
+    "serve": "browser-sync start --server --files 'css/*.css, js/*.js'",
     "scss": "node-sass sass -o css"
   },
   "repository": {

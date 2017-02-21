@@ -1,3 +1,5 @@
+$background-color: rgb(0, 0, 0);
+
 
 @import 'search-header';
 
@@ -8,6 +10,7 @@
 body {
     margin: 0;
     position: relative;
+    background-color: $background-color;
 }
 
 #results {

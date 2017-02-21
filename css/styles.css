@@ -27,7 +27,8 @@
 
 body {
   margin: 0;
-  position: relative; }
+  position: relative;
+  background-color: black; }
 
 #results {
   display: flex;
