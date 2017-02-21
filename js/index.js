@@ -31,23 +31,28 @@ $(document).ready(function() {
                 if(rsp.stat === "fail") {
                     $results = $("<p>")
                         .text("flickr Error("+ rsp.code +"): "+ rsp.message);
+                        
+                    $('#results').html($results);
                 } 
                 else if (rsp.stat === "ok") {
                     var photos = rsp.photos.photo;
 
-                    $results = $('<ul>');
+                    $results = $('<div>');
 
-                    $(photos).each(function() {
-                        $photo = $('<li>');
-                        var $thumb = $('<img>').attr("src", makeImageUrl(this, 't'));
+                    $(photos).each(function(index) {
+                        var $photo = $('<div>')
+                            .addClass('thumbnail')
+                            .attr('data-index', index);
+                        
+                        var $thumb = $('<img>')
+                            .attr("src", makeImageUrl(this, 't'));
+
                         $photo.append($thumb);
-                        var $caption = $("<p>").addClass('caption').text(this.title);
-                        $photo.append($caption);
                         $photo.appendTo($results);
                     });
-                }
 
-                $('#results').html($results);
+                    $('#results').html($results.children());
+                }
                 
             });
     });
