@@ -1,0 +1,20 @@
+$black: rgb(0, 0, 0);
+$dark-grey: rgb(70, 70, 70);
+$white: rgb(255, 255, 255);
+
+$zModal: 20;
+$zSubmitBorder: 15;
+$zSearchHeader: 10;
+
+@mixin absoluteCenter() {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+@import 'base';
+@import 'intro';
+@import 'search-header';
+@import 'modal';
+@import 'results';

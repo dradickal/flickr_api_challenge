@@ -1,0 +1,46 @@
+$input-background: $white;
+$submit-hover: darken($input-background, 5%);
+$input-border: darken($input-background, 20%);
+
+@mixin input-reset() {
+    border: none;
+    margin: 0;
+    font: 20px/2.5em 'Arial';
+}
+
+.search-header {
+    position: fixed;
+    width: 100%;
+    clear: both;
+    z-index: $zSearchHeader;
+}
+
+
+.search-text { 
+    @include input-reset();
+    width: 75%;
+    float: left;
+    text-align: center;
+    background-color: $input-background;
+}
+
+.btn-submit {
+    @include input-reset();
+    width: 25%;
+    background-color: $input-background;
+    position: relative;
+    cursor: pointer;
+    &:hover {
+        background-color: $submit-hover;
+    }
+    &:before {
+        content: "";
+        position: absolute;
+        top: 10%;
+        left: 0;
+        width: 1px;
+        height: 80%;
+        background-color: $input-border;
+        z-index: $zSubmitBorder;
+    }
+}
