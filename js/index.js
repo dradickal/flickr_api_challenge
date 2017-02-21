@@ -30,53 +30,86 @@ photoSearch.prototype.makeImageUrl = function(photo, size) {
     return src + (size ? "_"+ size +".jpg" : ".jpg");
 };
 
-photoSearch.prototype.parseSearchResults = function(rsp) {
-    var $results; 
-    
-    if(rsp.stat === "fail") {
-        $results = $("<p>")
-            .text("flickr Error("+ rsp.code +"): "+ rsp.message);
-            
-        $('#results').html($results);
-    } 
-    else if (rsp.stat === "ok") {
-        var photos = rsp.photos.photo;
+photoSearch.prototype.parseSearchResults = function() {
+    var self = this;
+    var photos = self.paging.photo;
 
-        $results = $('<div>');
+    var $results = $('<div>');
 
-        $(photos).each(function(index) {
-            var tSrc = this.url_t || makeImageUrl(this, "t");
-            var oSrc = this.url_o || makeImageUrl(this);
-            
-            var $photo = $('<div>')
-                .addClass('thumbnail')
-                .attr('data-full-size', oSrc);
-            
-            var $thumb = $('<img>')
-                .attr("src", tSrc);
+    $(photos).each(function(index) {
+        var tSrc = this.url_t || self.makeImageUrl(this, "t");
+        var oSrc = this.url_o || self.makeImageUrl(this);
+        
+        var $photo = $('<div>')
+            .addClass('thumbnail')
+            .attr('data-full-size', oSrc);
+        
+        var $thumb = $('<img>')
+            .attr("src", tSrc);
 
-            $photo.append($thumb);
-            $photo.appendTo($results);
-        });
+        $photo.append($thumb);
+        $photo.appendTo($results);
+    });
 
+    if(self.paging.page === 1) {
         $('#results').html($results.children());
+        $('#next-results').addClass('show');
+    } else {
+        $('#results').append($results.children());
+        if(ps.paging.page === ps.paging.pages) {
+            $('#next-results').removeClass('show');
+        }
     }
-    
 };
 
-$(document).ready(function() {
+photoSearch.prototype.showError = function(rsp) {
+    var $results = $("<p>")
+        .text("flickr Error("+ rsp.code +"): "+ rsp.message);
     
+    $('#results').html($results);
+}
+
+$(document).ready(function() {
+    var ps;
+
+    function newSearch(query) {
+        ps = new photoSearch(query);
+        
+        runSearch();
+    }
+
+    function runSearch() {
+        ps.search()
+            .then(function(rsp) {
+                if(rsp.stat === "fail") {
+                    ps.showError(rsp);
+                }
+                else if (rsp.stat === "ok") {
+                    ps.paging = rsp.photos;
+                    ps.parseSearchResults();
+                }
+            });
+    }
+
+    var $window = $(window);
+    $('#next-results').on('click', function() {
+        if(ps === undefined) {
+            return;
+        }
+        if(ps.paging.page < ps.paging.pages) {
+            runSearch();
+        }
+    });
+
     $('#flickr_search').on('click', function() {
         var query = $('#flickr_query').val();
-        photoSearch(query)
-            .then(parseSearchResults);
+        newSearch(query);
     });
     
     $('#flickr_query').on('keyup', function(e) {
         if (e.keyCode === 13) {
             var query = $(this).val();
-            photoSearch(query)
-                .then(parseSearchResults);
+            newSearch(query);
         }
     });
     
