@@ -2,11 +2,6 @@
     box-sizing: border-box;
 }
 
-body {
-    background-color: #000;
-    color: rgba(255,255,255, 1);
-}
-
 #results {
     display: flex;
     flex-flow: wrap;
@@ -14,7 +9,6 @@ body {
 
 .thumbnail {
     height: 100px;
-    /* width: 100px; */
     margin: 4px;
     flex-grow: 1;
     cursor: pointer;
