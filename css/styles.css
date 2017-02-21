@@ -1,18 +1,23 @@
-#flickr_query {
+.search-header {
+  width: 100%;
+  clear: both; }
+
+.search-text {
   border: none;
   margin: 0;
   font: 20px/2.5em 'Arial';
   width: 75%;
+  float: left;
   text-align: center;
   background-color: white; }
 
-#flickr_search {
+.btn-submit {
   border: none;
   margin: 0;
   font: 20px/2.5em 'Arial';
   width: 25%;
   background-color: white; }
-  #flickr_search :before {
+  .btn-submit:before {
     content: "";
     position: absolute;
     top: 10%;

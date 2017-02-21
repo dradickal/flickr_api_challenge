@@ -7,20 +7,27 @@ $input-border: darken($input-background, 20%);
     font: 20px/2.5em 'Arial';
 }
 
+.search-header {
+    width: 100%;
+    clear: both;
+}
 
-#flickr_query { 
+
+.search-text { 
     @include input-reset();
     width: 75%;
+    float: left;
     text-align: center;
     background-color: $input-background;
 }
 
-#flickr_search {
+.btn-submit {
     @include input-reset();
     width: 25%;
     background-color: $input-background;
+    position: relative;
     
-    :before {
+    &:before {
         content: "";
         position: absolute;
         top: 10%;
