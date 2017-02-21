@@ -66,5 +66,9 @@ $(document).ready(function() {
                 .then(parseSearchResults);
         }
     });
+    
+    $('#results').on('click', '.thumbnail', function () {
+        console.log('Click:', this.dataset['index']);
+    });
 
 });
