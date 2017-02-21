@@ -50,11 +50,6 @@ body {
     background-color: #cccccc;
     z-index: 10; }
 
-#results {
-  display: flex;
-  flex-flow: wrap;
-  padding-top: 65px; }
-
 #modal {
   display: none;
   position: fixed;
@@ -67,12 +62,10 @@ body {
   background-color: rgba(0, 0, 0, 0.9);
   overflow: hidden;
   z-index: 10; }
-
-#modal.show {
-  display: block; }
-
-#modal.show + div {
-  filter: blur(5px); }
+  #modal.show {
+    display: block; }
+  #modal.show + div {
+    filter: blur(5px); }
 
 #modal-close:before {
   content: "x";
@@ -95,6 +88,11 @@ body {
   max-height: 90vh;
   object-fit: contain;
   font-family: 'object-fit: contain;'; }
+
+#results {
+  display: flex;
+  flex-flow: wrap;
+  padding-top: 65px; }
 
 .thumbnail {
   height: 100px;
