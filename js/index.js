@@ -8,8 +8,7 @@ var photoSearch = function (searchText) {
     "&safe_search=1" +
     "&format=json" +
     "&jsoncallback=?"+
-    "&api_key=" + API_KEY;
-
+    "&api_key="+ API_KEY;
 
     return $.ajax({
         url: url,
@@ -27,23 +26,34 @@ $(document).ready(function() {
         var query = $('#flickr_query').val();
         photoSearch(query)
             .then(function(rsp) {
+                var $results; 
+                
                 if(rsp.stat === "fail") {
-                    console.log("flickr Error("+ rsp.code +"):", rsp.message);
+                    $results = $("<p>")
+                        .text("flickr Error("+ rsp.code +"): "+ rsp.message);
+                        
+                    $('#results').html($results);
+                } 
+                else if (rsp.stat === "ok") {
+                    var photos = rsp.photos.photo;
+
+                    $results = $('<div>');
+
+                    $(photos).each(function(index) {
+                        var $photo = $('<div>')
+                            .addClass('thumbnail')
+                            .attr('data-index', index);
+                        
+                        var $thumb = $('<img>')
+                            .attr("src", makeImageUrl(this, 't'));
+
+                        $photo.append($thumb);
+                        $photo.appendTo($results);
+                    });
+
+                    $('#results').html($results.children());
                 }
-
-                var $resultsList = $('<ul>');
-                var photos = rsp.photos.photo;
-
-                $(photos).each(function() {
-                    $photo = $('<li>');
-                    var $thumb = $('<img>').attr("src", makeImageUrl(this, 't'));
-                    $photo.append($thumb);
-                    var $caption = $("<p>").addClass('caption').text(this.title);
-                    $photo.append($caption);
-                    $photo.appendTo($resultsList);
-                });
-
-                $('#results').html($resultsList);
+                
             });
     });
 });

@@ -1,0 +1,44 @@
+* {
+    box-sizing: border-box;
+}
+
+#results {
+    display: flex;
+    flex-flow: wrap;
+}
+
+.thumbnail {
+    height: 100px;
+    margin: 4px;
+    flex-grow: 1;
+    cursor: pointer;
+    position: relative;
+    text-align: center;
+}
+
+.thumbnail:hover:before {
+    content: "";
+    position: absolute;
+    height: 100px;
+    width: 100%;
+    background-color: rgba(255,255,255, 0.3);
+}
+
+.thumbnail:hover:after {
+    content: "+";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2rem;
+    font-weight: 900;
+    color: rgba(255,255,255, 1);
+    text-shadow: 1px 2px 3px rgba(0, 0, 0, .7);
+}
+
+img {
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+    font-family: 'object-fit: contain;';
+}
