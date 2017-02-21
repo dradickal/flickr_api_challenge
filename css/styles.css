@@ -16,7 +16,8 @@
   margin: 0;
   font: 20px/2.5em 'Arial';
   width: 25%;
-  background-color: white; }
+  background-color: white;
+  position: relative; }
   .btn-submit:before {
     content: "";
     position: absolute;
