@@ -1,0 +1,13 @@
+$background-color: $black;
+$body-text: lighten($dark-grey, 10%);
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    position: relative;
+    font: 16px/1.3rem 'Arial', san-serif;
+    background-color: $background-color;
+    color: $body-text;
+}

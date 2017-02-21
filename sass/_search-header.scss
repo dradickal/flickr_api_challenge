@@ -1,4 +1,5 @@
-$input-background: rgb(255, 255, 255);
+$input-background: $white;
+$submit-hover: darken($input-background, 5%);
 $input-border: darken($input-background, 20%);
 
 @mixin input-reset() {
@@ -8,6 +9,7 @@ $input-border: darken($input-background, 20%);
 }
 
 .search-header {
+    position: fixed;
     width: 100%;
     clear: both;
 }
@@ -27,7 +29,9 @@ $input-border: darken($input-background, 20%);
     background-color: $input-background;
     position: relative;
     cursor: pointer;
-    
+    &:hover {
+        background-color: $submit-hover;
+    }
     &:before {
         content: "";
         position: absolute;
