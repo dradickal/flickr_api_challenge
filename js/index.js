@@ -72,8 +72,19 @@ $(document).ready(function() {
         }
     });
     
-    $('#results').on('click', '.thumbnail', function () {
-        console.log('Click:', this.dataset['fullSize']);
+    $('#results').on('click', '.thumbnail', function() {
+        var oSrc = this.dataset['fullSize'];
+        var $img = $('<img>')
+            .attr('src', oSrc);
+            // .attr('width')
+            // .attr('height');
+
+        $('#fullSize').html($img);
+        $('#modal').addClass('show');
+         
     });
 
+    $('#modal-close').on('click', function() {
+        $('#modal').removeClass('show');
+    });
 });
