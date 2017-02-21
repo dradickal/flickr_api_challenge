@@ -12,6 +12,7 @@ $input-border: darken($input-background, 20%);
     position: fixed;
     width: 100%;
     clear: both;
+    z-index: $zSearchHeader;
 }
 
 
@@ -40,6 +41,6 @@ $input-border: darken($input-background, 20%);
         width: 1px;
         height: 80%;
         background-color: $input-border;
-        z-index: 10;
+        z-index: $zSubmitBorder;
     }
 }

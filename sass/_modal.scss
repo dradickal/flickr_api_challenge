@@ -9,7 +9,7 @@
     max-height: 100vh;
     background-color: rgba($black, 0.9);
     overflow: hidden;
-    z-index: 10;
+    z-index: $zModal;
     
     &.show {
         display: block;

@@ -2,7 +2,9 @@ $black: rgb(0, 0, 0);
 $dark-grey: rgb(70, 70, 70);
 $white: rgb(255, 255, 255);
 
-
+$zModal: 20;
+$zSubmitBorder: 15;
+$zSearchHeader: 10;
 
 @mixin absoluteCenter() {
     position: absolute;
