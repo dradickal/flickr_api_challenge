@@ -21,39 +21,50 @@ var makeImageUrl = function(photo, size) {
     return "https://farm"+ photo.farm +".staticflickr.com/"+ photo.server +"/"+ photo.id +"_"+ photo.secret +"_"+ size +".jpg";
 };
 
+var parseSearchResults = function(rsp) {
+    var $results; 
+    
+    if(rsp.stat === "fail") {
+        $results = $("<p>")
+            .text("flickr Error("+ rsp.code +"): "+ rsp.message);
+            
+        $('#results').html($results);
+    } 
+    else if (rsp.stat === "ok") {
+        var photos = rsp.photos.photo;
+
+        $results = $('<div>');
+
+        $(photos).each(function(index) {
+            var $photo = $('<div>')
+                .addClass('thumbnail')
+                .attr('data-index', index);
+            
+            var $thumb = $('<img>')
+                .attr("src", makeImageUrl(this, 't'));
+
+            $photo.append($thumb);
+            $photo.appendTo($results);
+        });
+
+        $('#results').html($results.children());
+    }
+    
+};
+
 $(document).ready(function() {
     $('#flickr_search').on('click', function() {
         var query = $('#flickr_query').val();
         photoSearch(query)
-            .then(function(rsp) {
-                var $results; 
-                
-                if(rsp.stat === "fail") {
-                    $results = $("<p>")
-                        .text("flickr Error("+ rsp.code +"): "+ rsp.message);
-                        
-                    $('#results').html($results);
-                } 
-                else if (rsp.stat === "ok") {
-                    var photos = rsp.photos.photo;
-
-                    $results = $('<div>');
-
-                    $(photos).each(function(index) {
-                        var $photo = $('<div>')
-                            .addClass('thumbnail')
-                            .attr('data-index', index);
-                        
-                        var $thumb = $('<img>')
-                            .attr("src", makeImageUrl(this, 't'));
-
-                        $photo.append($thumb);
-                        $photo.appendTo($results);
-                    });
-
-                    $('#results').html($results.children());
-                }
-                
-            });
+            .then(parseSearchResults);
     });
+
+    $('#flickr_query').on('keyup', function(e) {
+        if (e.keyCode === 13) {
+            var query = $(this).val();
+            photoSearch(query)
+                .then(parseSearchResults);
+        }
+    });
+
 });
