@@ -1,0 +1,33 @@
+$input-background: rgb(255, 255, 255);
+$input-border: darken($input-background, 20%);
+
+@mixin input-reset() {
+    border: none;
+    margin: 0;
+    font: 20px/2.5em 'Arial';
+}
+
+
+#flickr_query { 
+    @include input-reset();
+    width: 75%;
+    text-align: center;
+    background-color: $input-background;
+}
+
+#flickr_search {
+    @include input-reset();
+    width: 25%;
+    background-color: $input-background;
+    
+    :before {
+        content: "";
+        position: absolute;
+        top: 10%;
+        left: 0;
+        width: 1px;
+        height: 80%;
+        background-color: $input-border;
+        z-index: 10;
+    }
+}
