@@ -125,7 +125,7 @@ $(document).ready(function() {
          
     });
 
-    $('#modal-close').on('click', function() {
-        $('#modal').removeClass('show');
+    $('#modal').on('click', function() {
+        $(this).removeClass('show');
     });
 });

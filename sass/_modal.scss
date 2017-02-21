@@ -20,15 +20,10 @@
     }
 }
 
-#modal-close:before {
-    content: "x";
-    position: absolute;
-    top: 0;
-    right: 0;
-    padding: 0 15px;
-    color: $white;
-    font: 500 30px/1 'Arial';
-    cursor: pointer;
+#modal-close {
+    width: 100%;
+    margin: 5px auto;
+    text-align: center;
 }
 
 #fullSize {
