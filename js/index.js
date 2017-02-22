@@ -1,10 +1,20 @@
-function photoSearch(searchText) {
+/* 
+ * Constructor function for the PhotoSearch obj
+ * 
+ * @param string searchText
+ * @return PhotoSearch
+ */
+function PhotoSearch(searchText) {
     this.searchText = searchText;
     this.paging = {};
 }
 
-
-photoSearch.prototype.search = function () {
+/* 
+ * Ajax call to flickr API
+ * - Uses searchText property for query
+ * - Uses paging property to increase pagination
+ */
+PhotoSearch.prototype.search = function () {
     var API_KEY = "089063c49f6c8706a04b70f8a1f2abb2";
 
     var url = "https://api.flickr.com/services/rest/?" +
@@ -25,12 +35,25 @@ photoSearch.prototype.search = function () {
     });
 };
 
-photoSearch.prototype.makeImageUrl = function(photo, size) {
+/*
+ * Used to generate img URLs if not returned from API
+ * - size is a single character string defined by flickr to detemine img size.
+ *  
+ * @param object photo
+ * @param string size (opt)
+ * @return string
+ */
+PhotoSearch.prototype.makeImageUrl = function(photo, size) {
     var src = "https://farm"+ photo.farm +".staticflickr.com/"+ photo.server +"/"+ photo.id +"_"+ photo.secret;
     return src + (size ? "_"+ size +".jpg" : ".jpg");
 };
 
-photoSearch.prototype.parseSearchResults = function() {
+/*
+ * Loops through array of photos from API and injects
+ * them onto the page.
+ * - Uses paging property to access photos
+ */
+PhotoSearch.prototype.parseSearchResults = function() {
     var self = this;
     var photos = self.paging.photo;
 
@@ -62,7 +85,14 @@ photoSearch.prototype.parseSearchResults = function() {
     }
 };
 
-photoSearch.prototype.showError = function(rsp) {
+
+/*
+ * Render API error onto page
+ * - rsp should be response from API with rsp.stat = "fail"
+ * 
+ * @param object rsp
+ */
+PhotoSearch.prototype.showError = function(rsp) {
     var $results = $("<p>")
         .text("flickr Error("+ rsp.code +"): "+ rsp.message);
     
@@ -70,14 +100,25 @@ photoSearch.prototype.showError = function(rsp) {
 }
 
 $(document).ready(function() {
+    //Sharing var so checks can be run on #next-result.click()
     var ps;
-
+    
+    /*
+     * Calls Constructor fn for PhotoSearch, then calls runSearch()
+     * 
+     * @param string query
+     */
     function newSearch(query) {
-        ps = new photoSearch(query);
+        ps = new PhotoSearch(query);
         
         runSearch();
     }
 
+    /*
+     * Uses PhotoSearch obj to call Ajax fn
+     * - Promise ensures a good response comes back from API
+     *   before calling next functions
+     */
     function runSearch() {
         ps.search()
             .then(function(rsp) {
@@ -91,7 +132,7 @@ $(document).ready(function() {
             });
     }
 
-    var $window = $(window);
+    //#next-results begins pagination search call on click
     $('#next-results').on('click', function() {
         if(ps === undefined) {
             return;
@@ -101,11 +142,13 @@ $(document).ready(function() {
         }
     });
 
+    //Submit btn that triggers a new search on click
     $('#flickr_search').on('click', function() {
         var query = $('#flickr_query').val();
         newSearch(query);
     });
     
+    //Input searchbox that triggers a new search on enter
     $('#flickr_query').on('keyup', function(e) {
         if (e.keyCode === 13) {
             var query = $(this).val();
@@ -113,18 +156,19 @@ $(document).ready(function() {
         }
     });
     
+    //sets up event listener for thumbnails as they are dynamically loaded
+    //thumnail click triggers opening of Modal
     $('#results').on('click', '.thumbnail', function() {
         var oSrc = this.dataset['fullSize'];
         var $img = $('<img>')
             .attr('src', oSrc);
-            // .attr('width')
-            // .attr('height');
 
         $('#fullSize').html($img);
         $('#modal').addClass('show');
          
     });
 
+    //Modal will close on click anywhere inside
     $('#modal').on('click', function() {
         $(this).removeClass('show');
     });
