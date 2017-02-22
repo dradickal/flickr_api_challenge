@@ -1,5 +1,6 @@
 <html>
   <head>
+    <title>flickr quick search</title>
     <script src="http://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/object-fit-images@3.1.2/dist/ofi.min.js"></script>
     <script>
@@ -13,7 +14,7 @@
   </head>
   <body>
     <div id="modal">
-      <div id="modal-close"></div>
+      <div id="modal-close">click anywhere close</div>
       <div id="fullSize"></div>
     </div>
     <div>
@@ -27,6 +28,7 @@
           <p class="intro-text">Choose a subject to get your quick image results from flickr!</p>
         </div>
       </div>
+      <button id="next-results">Load More Images</button>
     </div>
   </body>
 </html>

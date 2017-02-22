@@ -1,8 +1,22 @@
+$button-text: lighten($dark-grey, 10%);
 
 #results {
     display: flex;
     flex-flow: wrap;
     padding-top: 65px;
+}
+
+#next-results {
+    display: none;
+    margin: 25px auto;
+    padding: 15px 60px;
+    border: 1px solid;
+    color: $button-text;
+    background: transparent;
+    cursor: pointer;
+    &.show {
+        display: block;
+    }
 }
 
 .thumbnail {
